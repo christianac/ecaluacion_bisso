@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use App\Http\Requests\Cliente\CreateClienteRequest;
+use App\Http\Requests\Cliente\EditClienteRequest;
 use App\Http\Controllers\Controller;
 
 //Models
 use App\Client;
+use App\Address;
 
 class HomeController extends Controller
 {
@@ -19,8 +22,10 @@ class HomeController extends Controller
      */
     public function index()
     {
+       
         $clientes = Client::all();
         return view( 'home' ,compact('clientes') );
+
     }
 
     /**
@@ -30,7 +35,9 @@ class HomeController extends Controller
      */
     public function create()
     {
-        //
+        
+        return view( 'create' );
+
     }
 
     /**
@@ -39,9 +46,26 @@ class HomeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateClienteRequest $request)
     {
-        //
+
+        $cliente = new Client();
+        $cliente->nombre = $request->nombre;
+        $cliente->razon_social = $request->razon_social;
+        $cliente->rfc = $request->rfc;
+        $cliente->save();
+
+        $address = new Address();
+        $address->calle = $request->calle;
+        $address->numero = $request->numero;
+        $address->estado = $request->estado;
+        $address->municipio = $request->municipio;
+        $address->client_id = $cliente->id;
+        $address->save();
+
+
+       return redirect()->route('home')->with('success','Registro guardado satisfactoriamente');
+
     }
 
     /**
@@ -52,7 +76,10 @@ class HomeController extends Controller
      */
     public function show($id)
     {
-        //
+        
+        $cliente = Client::find($id);
+        return view( 'show' ,compact('cliente') );
+        
     }
 
     /**
@@ -63,7 +90,10 @@ class HomeController extends Controller
      */
     public function edit($id)
     {
-        //
+        
+        $cliente = Client::find($id);
+        return view( 'edit' ,compact('cliente') );
+
     }
 
     /**
@@ -73,9 +103,24 @@ class HomeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EditClienteRequest $request, $id)
     {
-        //
+        
+        $cliente = Client::find($id);
+        $cliente->nombre = $request->nombre;
+        $cliente->razon_social = $request->razon_social;
+        $cliente->rfc = $request->rfc;
+        $cliente->save();
+
+        $address = Address::find($cliente->id);
+        $address->calle = $request->calle;
+        $address->numero = $request->numero;
+        $address->estado = $request->estado;
+        $address->municipio = $request->municipio;
+        $address->client_id = $cliente->id;
+        $address->save();
+
+       return redirect()->route('home')->with('success','Registro modificado satisfactoriamente');
     }
 
     /**
@@ -86,6 +131,31 @@ class HomeController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+            
+            $cliente = Client::find($id);
+            $cliente->delete();
+
+           return redirect()->route('home')->with('success','Registro Eliminado satisfactoriamente');
+        
     }
+
+    public function storeAjax()
+    {
+        if ($request->ajax) {
+
+            return true;
+
+        } 
+    }
+
+    public function destroyAjax()
+    {
+        if ($request->ajax) {
+
+            return true;
+
+        } 
+    }
+
 }

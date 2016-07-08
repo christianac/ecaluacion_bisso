@@ -6,6 +6,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <html>
 
 @include('partials.htmlheader')
+@yield('extra.htmlheader')
 
 <!--
 BODY TAG OPTIONS:
@@ -36,11 +37,12 @@ desired effect
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-
         @include('partials.contentheader')
 
         <!-- Main content -->
         <section class="content">
+            @include('errors.messages')
+
             <!-- Your Page Content Here -->
             @yield('main-content')
         </section><!-- /.content -->
@@ -49,10 +51,12 @@ desired effect
     @include('partials.controlsidebar')
 
     @include('partials.footer')
+    @yield('modals')
 
 </div><!-- ./wrapper -->
 
 @include('partials.scripts')
+@yield('extra.scripts')
 
 </body>
 </html>

@@ -18,15 +18,15 @@ class Client extends Model
      *
      * @var array
      */
-    protected $fillable = ['name', 'razon_social', 'rfc'];
+    protected $fillable = ['nombre', 'razon_social', 'rfc'];
 
-    public function addresses()
+    public function address()
     {
-        return $this->hasMany('App\Address');
+        return $this->hasOne('App\Address');
     }
 
     public function bank_account()
     {
-        return $this->hasMany('App\BankAccount');
+        return $this->hasOne('App\BankAccount');
     }
 }
