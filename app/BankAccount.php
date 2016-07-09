@@ -11,14 +11,14 @@ class BankAccount extends Model
      *
      * @var string
      */
-    protected $table = 'clients';
+    protected $table = 'bank_accounts';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['calbancole', 'sucursal', 'numero_cuenta'];	
+    protected $fillable = ['banco', 'sucursal', 'numero_cuenta'];	
 
 
     public function clients()

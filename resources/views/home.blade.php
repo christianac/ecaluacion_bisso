@@ -33,7 +33,14 @@
 								<td> {{ $cliente->nombre }}</td>
 		                		<td> {{ $cliente->razon_social }}</td>
 		                		<td> {{ $cliente->rfc }}</td>
-		                		<td></td>
+		                		<td>
+		                			<ul>
+		                			@foreach($cliente->accounts as $cuenta)
+		                				<li>{{$cuenta->banco}}</li>
+		                			@endforeach
+		                			</ul>
+
+		                		</td>
 		               		</tr>
 		               		@empty
 		               			<div class="row">

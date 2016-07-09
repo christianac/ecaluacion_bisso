@@ -12,9 +12,9 @@ class CreateBankAccountsTable extends Migration
      */
     public function up()
     {
-        Schema::create('back_accounts', function (Blueprint $table) {
+        Schema::create('bank_accounts', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('calbancole');
+            $table->string('banco');
             $table->string('sucursal');
             $table->string('estado');
             $table->string('numero_cuenta');
@@ -36,6 +36,6 @@ class CreateBankAccountsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('back_accounts');
+        Schema::drop('bank_accounts');
     }
 }

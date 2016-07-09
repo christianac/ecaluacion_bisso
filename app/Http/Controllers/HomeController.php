@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\Cliente\CreateClienteRequest;
 use App\Http\Requests\Cliente\EditClienteRequest;
+use App\Http\Requests\Cuenta\CreateCuentaRequest;
 use App\Http\Controllers\Controller;
 
 //Models
 use App\Client;
 use App\Address;
+use App\BankAccount;
 
 class HomeController extends Controller
 {
@@ -140,22 +142,26 @@ class HomeController extends Controller
         
     }
 
-    public function storeAjax()
-    {
-        if ($request->ajax) {
+    public function storeAjax(CreateCuentaRequest $request)
+    {   
 
-            return true;
+            $cuenta = new BankAccount();
+            $cuenta->banco = $request->banco;
+            $cuenta->sucursal = $request->sucursal;
+            $cuenta->numero_cuenta = $request->numero_cuenta;
+            $cuenta->client_id = $request->cliente_id;
+            $cuenta->save();
+            return response()->json($cuenta);
 
-        } 
     }
 
-    public function destroyAjax()
+    public function destroyAjax(Request $request, $id)
     {
-        if ($request->ajax) {
 
-            return true;
-
-        } 
+            $cliente = BankAccount::findOrFail($id);
+            $cliente->delete();
+            return $cliente;
+        
     }
 
 }
