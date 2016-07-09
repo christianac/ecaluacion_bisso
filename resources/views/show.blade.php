@@ -188,8 +188,23 @@ $(document).ready(function () {
 				    $('#baseCuenta').append(cuentaNueva);
 				                },
                 error : function(error) {
-						swal("¡Error "+error['status']+"!", error['responseText']['numero_cuenta'], "warning");
-                	
+					var jsonObj = $.parseJSON(error.responseText);			
+					console.log(jsonObj.numero_cuenta);
+                	if (error['status'] == 403) {
+
+						swal("¡Error "+error['status']+"!", "No tiene permisos para la operacion", "warning");
+                	} 
+                	if (error['status'] == 422) {
+                		if (jsonObj.numero_cuenta) {
+							swal("¡Error "+error['status']+"!", "Combinasion de Numero de Cuenta y Sucursal, ya se encuentran utilizadas", "warning");
+                		} else {
+							swal("¡Error "+error['status']+"!", "Faltan datos requeridos", "warning");
+                			
+                		}
+                	} 
+                	if (error['status'] == 500) {
+						swal("¡Error "+error['status']+"!", "Ah ocurrido un error en el server", "warning");
+					}
 					console.log(error);
 
                 }

@@ -76,7 +76,7 @@ return [
     'timezone'             => 'The :attribute must be a valid zone.',
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
-
+    'unique_with' => 'This combination of :fields already exists.',
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines
@@ -89,8 +89,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'numero_cuenta' => [
+            'unique_with:' => 'El Numero de Cuenta y Sucursal no puede ser igual al de otro cliente',
         ],
     ],
 
