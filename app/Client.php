@@ -25,8 +25,8 @@ class Client extends Model
         return $this->hasOne('App\Address');
     }
 
-    public function bank_account()
+    public function accounts()
     {
-        return $this->hasOne('App\BankAccount');
+        return $this->hasMany('App\BankAccount');
     }
 }

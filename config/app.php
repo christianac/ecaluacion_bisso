@@ -147,6 +147,7 @@ return [
 
         Acacha\AdminLTETemplateLaravel\app\Providers\AdminLTETemplateServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Felixkiss\UniqueWithValidator\UniqueWithValidatorServiceProvider::class
     ],
 
     /*

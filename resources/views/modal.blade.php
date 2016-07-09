@@ -8,7 +8,7 @@
 				<h4 class="modal-title" id="myModalLabel">Crear Cuenta</h4>
 			</div>
 			<div class="modal-body">
-					{!! Form::open(['route' => 'client.store', 	'method' => 'POST' , 'role' => 'form', 'id' => 'formCuenta']) !!}
+					{!! Form::open(['route' => 'client.storeAjax', 	'method' => 'POST' , 'role' => 'form', 'id' => 'formCuenta']) !!}
 						<div class="form-group">
 							{!! Form::label('banco', 'Banco') !!}
 							{!! Form::text('banco', null ,['class' => 'form-control']) !!}

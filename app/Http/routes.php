@@ -20,8 +20,10 @@ Route::group( ['middleware' => 'auth'] , function() {
 	Route::get('home', 'HomeController@index')->name('home');
 	Route::get('home/create', 'HomeController@create')->name('client.create');
 	Route::post('home/store', 'HomeController@store')->name('client.store');
+	Route::post('home/storeajax', 'HomeController@storeAjax')->name('client.storeAjax');
 	Route::get('home/show/{id}', 'HomeController@show')->name('client.show');
 	Route::get('home/edit/{id}', 'HomeController@edit')->name('client.edit');
 	Route::put('home/update/{id}', 'HomeController@update')->name('client.update');
 	Route::delete('home/destroy/{id}', 'HomeController@destroy')->name('client.destroy');
+	Route::post('home/destroyajax/{id}', 'HomeController@destroyAjax')->name('client.destroyAjax');
 });
