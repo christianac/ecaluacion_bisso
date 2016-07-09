@@ -77,7 +77,7 @@
 <script src="{{ asset('/plugins/jquery-validation/jquery.validate.js') }}" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function () {
-	$('.deleteCuenta').on('click', function(){
+	$(document).on('click','.deleteCuenta', function(){
 		var idCuenta = $(this).data('cuenta');
 		var elementoCuenta = $(this);
 		swal({
@@ -111,7 +111,7 @@ $(document).ready(function () {
 					elementoCuenta.parent().parent().parent().parent().remove();
            		},
                 error : function(error) {
-					swal("¡Error!", "Ah ocurrido un error", "warning")
+					swal("¡Error!", "Ah ocurrido un error", "warning");
 					
 
                 }
@@ -122,7 +122,7 @@ $(document).ready(function () {
 	});
 	$("#formCuenta").validate({
 		rules: {
-			banco: "required",
+			//banco: "required",
 			sucursal: "required",
 			numero_cuenta: "required"
 		},
@@ -160,16 +160,21 @@ $(document).ready(function () {
                 },
                 success  : function(result) {
                 	var jsonObj = $.parseJSON(JSON.stringify(result));
-                	$("#myModal").modal().hide()
+                	console.log(jsonObj);
+                	$("#myModal").modal('toggle');
                 	//$('#myModal').hide();	
 					swal("¡Completado!", "Se ha generado el registro exitosamente", "success")
 					var cuentaNueva = '<div class="col-md-6">'+
 								'<div class="box box-danger box-solid">'+
 									'<div class="box-header with-border">'+
 									'<h3 class="box-title">Cuenta</h3>'+
+										'<div class="box-tools pull-right">'+
 										'<button type="button" class="btn btn-box-tool'+ 
- 											'deleteCuenta" data-widget="remove" data-cuenta="'+jsonObj['id']+'"><i class="fa fa-times"></i>'+
+ 											' deleteCuenta"'+ 
+ 											'data-cuenta="'+jsonObj['id']+
+ 											'"><i class="fa fa-times"></i>'+
 										'</button>'+
+										'</div>'+
 									'</div>'+
 									'<div class="box-body">'+
 										'<ol>'+
@@ -183,7 +188,18 @@ $(document).ready(function () {
 				    $('#baseCuenta').append(cuentaNueva);
 				                },
                 error : function(error) {
-					swal("¡Error!", "Ah ocurrido un error", "warning")
+                	if (error['status'] == 403) {
+
+						swal("¡Error 403!", "No tiene permisos para la operacion", "warning");
+                	} 
+                	if (error['status'] == 422) {
+
+						swal("¡Error 422!", "No cumplio Todas las validaciones requeridas", "warning");
+                	} 
+                	if (error['status'] == 500) {
+						swal("¡Error 500!", "Ah ocurrido un error en el server", "warning");
+					}
+					console.log(error);
 
                 }
             });

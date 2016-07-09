@@ -24,7 +24,9 @@ class CreateCuentaRequest extends Request
     public function rules()
     {
         return [
-            //
+            'banco' => 'required',
+            'sucursal' => 'required',
+            'numero_cuenta' => 'required|unique_with:bank_accounts,sucursal',
         ];
     }
 }
